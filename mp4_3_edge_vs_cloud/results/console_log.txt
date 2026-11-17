@@ -1,0 +1,38 @@
+Mini Project 4.3 - edge vs cloud latency simulator
+events=20000  deadline=100 ms  hard-decision share=20%  baseline congestion=0.3
+
+path      mean(ms)   p95(ms)   p99(ms)  worst(ms)  deadline met %  on-time&correct %
+edge          52.6      83.1      93.1      127.0           99.72              95.82
+cloud         71.4     134.5     260.0     1588.1           89.39              88.20
+hybrid        53.3      78.4     143.6      849.7           97.57              96.36
+
+edge easy decisions : mean 46.5 ms, p99 62.0 ms, met 100.00 %
+edge hard decisions : mean 76.8 ms, p99 102.4 ms, met 98.62 %
+
+Congestion sweep (deadline-compliance %)
+congestion    cloud     edge   hybrid  cloud p99(ms)
+      0.00   100.00    99.65   100.00           67.8
+      0.10    97.64    99.65    99.39          140.2
+      0.20    93.72    99.65    98.62          203.2
+      0.30    90.33    99.65    97.75          242.5
+      0.40    85.59    99.65    97.04          296.2
+      0.50    81.70    99.65    95.71          340.9
+      0.60    76.96    99.65    94.86          369.2
+      0.70    71.34    99.65    92.78          399.3
+      0.80    64.83    99.65    91.45          430.3
+      0.90    58.41    99.65    89.47          472.6
+      1.00    50.50    99.65    87.81          502.7
+
+cloud stays >= 99% compliant up to congestion = 0.0
+
+cloud stays >= 95% compliant up to congestion = 0.15000000000000002
+
+Deadline sensitivity at baseline congestion (compliance %)
+ deadline    edge   cloud  hybrid
+      60ms   78.89   48.11   82.34
+      80ms   93.08   85.39   95.53
+     100ms   99.72   89.39   97.57
+     150ms  100.00   96.28   99.09
+     200ms  100.00   98.20   99.54
+
+Figures -> ./figures   tables -> ./results

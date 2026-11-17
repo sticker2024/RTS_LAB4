@@ -1,0 +1,53 @@
+====================================================================================================
+Mini Project 4.1 - sampling jitter / overrun simulation   T_nominal=50 ms (20 Hz)  run=20 s  N=400 scheduled samples  threshold=0.5
+====================================================================================================
+[sanity] J=0, p=0 -> 10/10 crossings matched, mean |delay| = 1.45 ms, max |delay| = 2.42 ms (difference only from the c_k draw, c in 5..15% of T)
+
+Figure configurations (single seed = 7):
+configuration              mean_dt  std_dt  maxOver   over%  >1.5T%   drops   miss  meanDly   maxDly   P_rms
+A  jitter only  J=30% T, p=0   50.03   12.24      0.0     0.0     1.8     0.0   0.00    -0.59   -14.33  0.0435
+B  overruns only J=0, p=10%   53.77   23.06     98.7    12.1    10.2    28.0   0.00    31.48   149.70  0.1058
+C  combined  J=30% T, p=10%   53.88   25.01     92.8    12.9    12.7    29.0   0.00     7.78    81.79  0.0990
+
+Sweep: Monte-Carlo means over 200 seeds
+configuration              mean_dt  std_dt  maxOver   over%  >1.5T%   drops   miss  meanDly   maxDly   P_rms
+J=10%T p=2%                  50.60   10.29     90.0     2.0     1.7     4.7   0.00     3.23    26.89  0.0471
+J=10%T p=5%                  51.51   15.37     95.9     5.0     4.2    11.6   0.00     8.23    60.76  0.0673
+J=10%T p=15%                 54.86   25.28     98.5    14.9    12.4    35.1   0.00    20.82   102.81  0.1125
+J=30%T p=2%                  50.63   15.33     90.0     2.0     3.0     5.0   0.00     2.19    19.01  0.0584
+J=30%T p=5%                  51.57   18.86     95.9     5.0     5.4    12.1   0.00     7.04    58.66  0.0751
+J=30%T p=15%                 55.02   27.02     98.4    14.9    13.3    36.2   0.00    21.88   107.93  0.1163
+J=50%T p=2%                  50.65   22.16     90.0     2.0    13.7     5.2   0.00    -2.19     5.77  0.0682
+J=50%T p=5%                  51.64   24.44     95.8     5.0    15.5    12.7   0.00     3.61    51.08  0.0826
+J=50%T p=15%                 55.21   30.39     98.4    14.9    21.4    37.4   0.00    18.28   103.94  0.1212
+
+Lab task 1 - equal mean disturbance d (mean |timing disturbance| per cycle, as fraction of T)
+  jitter-only : J = 2d  (mean |U(-J,J)| = J/2 = d)
+  overrun-only: p = d / E[excess] with E[excess] = mean(c_overrun) - T = 1.1 T
+configuration              mean_dt  std_dt  maxOver   over%  >1.5T%   drops   miss  meanDly   maxDly   P_rms
+jitter-only  d=0.05T         50.00    4.08      0.0     0.0     0.0     0.0   0.00     0.05    -0.03  0.0261
+overrun-only d=0.05T (p=4.5%)   51.35   14.25     95.2     4.5     3.8    10.4   0.00     7.11    52.50  0.0623
+jitter-only  d=0.10T         49.99    8.16      0.0     0.0     0.0     0.0   0.00     0.09    -0.57  0.0358
+overrun-only d=0.10T (p=9.1%)   52.78   19.95     97.6     9.1     7.5    20.9   0.00    14.02    85.24  0.0873
+jitter-only  d=0.20T         49.99   16.33      0.0     0.0     7.0     0.0   0.00    -2.77   -19.49  0.0502
+overrun-only d=0.20T (p=18.2%)   55.99   27.59     98.6    18.2    15.1    42.4   0.00    24.69   111.61  0.1230
+
+Lab task 2 - P-type rule u = Kp(0 - y), ZOH output; RMS error vs ideal output (column P_rms above)
+  jitter-only  J=30%T    P-rule RMS error = 0.0436 | threshold-rule mean |delay| = 8.34 ms, missed crossings = 0.00
+  overrun-only p=10%     P-rule RMS error = 0.0918 | threshold-rule mean |delay| = 18.47 ms, missed crossings = 0.00
+  combined               P-rule RMS error = 0.0980 | threshold-rule mean |delay| = 23.51 ms, missed crossings = 0.00
+
+Lab task 3 - compliance metric (% intervals > 1.5 T) vs raw interval std
+  jitter-only  J=30%T    std =  12.24 ms   >1.5T =  1.32 %   mean|delay| =   8.34 ms
+  jitter-only  J=50%T    std =  20.38 ms   >1.5T = 12.52 %   mean|delay| =  15.84 ms
+  overrun-only p=2%      std =   9.35 ms   >1.5T =  1.65 %   mean|delay| =   5.18 ms
+  overrun-only p=10%     std =  20.85 ms   >1.5T =  8.27 %   mean|delay| =  18.47 ms
+
+Lab task 4 - halve T_nominal while holding ABSOLUTE jitter (15 ms bound) and ABSOLUTE
+  overrun duration (mean 105 ms, p = 10% per cycle) fixed (over_scale = 0.05/T keeps seconds constant)
+  T= 50.0 ms | jitter-only : std=12.24 ms =  24% of T, >1.5T=  1.3%, mean|delay|= 8.34 ms, dropped= 0.0
+               | overrun-only: std=20.85 ms =  42% of T, >1.5T=  8.3%, mean|delay|=18.47 ms, dropped=22.9
+  T= 25.0 ms | jitter-only : std=12.02 ms =  48% of T, >1.5T= 16.8%, mean|delay|=10.62 ms, dropped= 0.0
+               | overrun-only: std=26.03 ms = 104% of T, >1.5T= 10.0%, mean|delay|=25.18 ms, dropped=170.1
+
+Figures written to ./figures, tables to ./results

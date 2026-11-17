@@ -1,0 +1,52 @@
+Mini Project 4.2 - multi-rate environmental monitoring pipeline
+simulated length 60 s | on-time tolerance 10% of period | tail probability 5% | seed 11
+
+--- FP scheduling, 3 streams ---  (gateway utilisation 17.7 %)
+stream         period required on-time  late missed on-time% meanOvr(ms) maxOvr(ms) alertLat(ms)
+temperature      0.50      120     118     2      0     98.3         4.1      207.5        252.3   (3/3 crossings alerted)
+humidity         1.30       47      47     0      0    100.0        12.3      107.5        499.0   (2/2 crossings alerted)
+air_quality      3.00       20      20     0      0    100.0         4.1       24.3       1971.0   (2/2 crossings alerted)
+
+--- EDF scheduling, 3 streams ---  (gateway utilisation 17.7 %)
+stream         period required on-time  late missed on-time% meanOvr(ms) maxOvr(ms) alertLat(ms)
+temperature      0.50      120     118     2      0     98.3         4.1      207.5        252.3   (3/3 crossings alerted)
+humidity         1.30       47      47     0      0    100.0        12.3      107.5        499.0   (2/2 crossings alerted)
+air_quality      3.00       20      20     0      0    100.0         4.1       24.3       1971.0   (2/2 crossings alerted)
+
+--- RR scheduling, 3 streams ---  (gateway utilisation 17.7 %)
+stream         period required on-time  late missed on-time% meanOvr(ms) maxOvr(ms) alertLat(ms)
+temperature      0.50      120      93    27      0     77.5        29.0      207.5        252.3   (3/3 crossings alerted)
+humidity         1.30       47      47     0      0    100.0         7.4       95.5        499.0   (2/2 crossings alerted)
+air_quality      3.00       20      20     0      0    100.0         1.7       32.4       1939.1   (2/2 crossings alerted)
+
+--- FP scheduling, 4 streams ---  (gateway utilisation 41.2 %)
+stream         period required on-time  late missed on-time% meanOvr(ms) maxOvr(ms) alertLat(ms)
+temperature      0.50      120     105    12      3     87.5        25.6      990.2        267.0   (3/3 crossings alerted)
+humidity         1.30       47      43     4      0     91.5        29.5      641.4        571.6   (2/2 crossings alerted)
+air_quality      3.00       20      18     2      0     90.0        50.2      397.3       2055.5   (2/2 crossings alerted)
+vibration        0.10      600     509    55     36     84.8        10.5     1346.1         44.5   (7/7 crossings alerted)
+
+--- EDF scheduling, 4 streams ---  (gateway utilisation 41.2 %)
+stream         period required on-time  late missed on-time% meanOvr(ms) maxOvr(ms) alertLat(ms)
+temperature      0.50      120     105    12      3     87.5        25.6      990.2        267.0   (3/3 crossings alerted)
+humidity         1.30       47      43     4      0     91.5        29.5      641.4        571.6   (2/2 crossings alerted)
+air_quality      3.00       20      18     2      0     90.0        50.2      397.3       2055.5   (2/2 crossings alerted)
+vibration        0.10      600     509    55     36     84.8        10.5     1346.1         44.5   (7/7 crossings alerted)
+
+--- RR scheduling, 4 streams ---  (gateway utilisation 38.0 %)
+stream         period required on-time  late missed on-time% meanOvr(ms) maxOvr(ms) alertLat(ms)
+temperature      0.50      120     118     2      0     98.3         2.5       79.6        252.3   (3/3 crossings alerted)
+humidity         1.30       47      47     0      0    100.0        11.3      114.6        457.1   (2/2 crossings alerted)
+air_quality      3.00       20      20     0      0    100.0         4.9       55.4       1969.6   (2/2 crossings alerted)
+vibration        0.10      600     392   169     39     65.3        17.6      298.5         38.1   (7/7 crossings alerted)
+
+Monte-Carlo comparison over 100 seeds (mean on-time % per stream)
+rule  streams  util%   temperature      humidity   air_quality     vibration
+FP          3   18.3          97.9          97.3          99.3             -
+EDF         3   18.3          97.9          97.3          99.3             -
+RR          3   18.2          80.2          97.9          99.5             -
+FP          4   40.7          90.5          91.7          97.7          86.1
+EDF         4   40.7          90.4          91.5          97.7          86.1
+RR          4   39.8          95.7          96.4          99.2          63.5
+
+Figures -> ./figures   tables -> ./results
